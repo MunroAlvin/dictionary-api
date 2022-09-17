@@ -2,25 +2,40 @@ import React, {useEffect, useState} from "react";
 
 function DictionaryAPI(){
 
-    const [users, setUsers] = useState(false)
+    let [words, setWords] = useState()
 
     useEffect(()=>{
-        fetch("https://jsonplaceholder.typicode.com/users").then(res => {
+        fetch("https://thesaurusapi.fly.dev/dictionary").then(res => {
             if(res.ok && res.status === 200){
                 return res.json();
             }
+            
         })
-        .then(data => {setUsers(data);})
+        .then(data => {setWords(data);})
+        // .then(data => {console.log(data);})
         .catch(err => {console.log(err);})
     }, []);
 
     return(
         <div>
-            {users && users.map(user =>(
-                <li key={user.id}>
-                    {user.name}
-                </li>
-            ))}
+            {words.objects.map(word =>{
+                return(
+                    <ul>
+                        <li key={word.id}>
+                        {word.synonyms.map(synonym => {
+                            return <li>
+                                {synonym}
+                            </li>
+                        })}
+                        </li>
+                    </ul>
+                ); 
+
+            }
+
+            )}
+            {/* <h1>{console.log(words.objects[0].synonyms)}</h1> */}
+
         </div>
     );
 }
