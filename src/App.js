@@ -1,9 +1,10 @@
 import React from "react";
+import DictionaryAPI from "./dictionaryAPI";
 
 function App() {
   return (
     <div className="App">
-      <h1>Dictionary App</h1>
+      <DictionaryAPI/>
     </div>
   );
 }
