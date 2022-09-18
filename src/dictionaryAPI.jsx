@@ -1,43 +1,72 @@
 import React, {useEffect, useState} from "react";
 
-function DictionaryAPI(){
+// const API_URL = "https://thesaurusapi.fly.dev/hello";
 
-    let [words, setWords] = useState()
+function DictionaryAPI(props){
 
-    useEffect(()=>{
-        fetch("https://thesaurusapi.fly.dev/dictionary").then(res => {
-            if(res.ok && res.status === 200){
-                return res.json();
-            }
-            
-        })
-        .then(data => {setWords(data);})
-        // .then(data => {console.log(data);})
-        .catch(err => {console.log(err);})
-    }, []);
+const [data, setData] = useState([]);
+const [loading, setLoading] = useState(true);
+const [error, setError] = useState(null);
 
-    return(
-        <div>
-            {words.objects.map(word =>{
-                return(
-                    <ul>
-                        <li key={word.id}>
-                        {word.synonyms.map(synonym => {
-                            return <li>
-                                {synonym}
-                            </li>
-                        })}
-                        </li>
-                    </ul>
-                ); 
 
-            }
 
-            )}
-            {/* <h1>{console.log(words.objects[0].synonyms)}</h1> */}
+useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await fetch(
+            "https://thesaurusapi.fly.dev/" + props.typedWord
+        );
+        if (!response.ok) {
+          throw new Error(
+            `This is an HTTP error: The status is ${response.status}`
+          );
+        }
+        let actualData = await response.json();
+        setData( addInto => [actualData]);
+        setError(null);
+      } catch(err) {
+        setError(err.message);
+        setData(null);
+      } finally {
+        setLoading(false);
+      }  
+    }
+    getData()
+  }, [props.typedWord])
 
-        </div>
-    );
+  return (
+    <div className="App">
+      <h3>Result:</h3>
+      {loading && <div>A moment please...</div>}
+      {error && (
+        <div>{`There is a problem fetching the post data - ${error}`}</div>
+      )}
+        {data && data.map((res) => {
+            return(
+                <div>
+                    {res.objects.map((resOBJ) => {
+                        return(
+                            <div>
+                                <h3>Key: {resOBJ.key}</h3>
+                                <h3>Pos: {resOBJ.pos}</h3>
+                                <h3>Word: {resOBJ.word}</h3>
+                                <h3>Synonyms: {resOBJ.synonyms.map((synonym) => {
+                                    return(
+                                        <ul>
+                                            <li>{synonym}</li>
+                                        </ul>
+                                    );
+                                })}</h3>
+                            </div>
+                        );
+                    })}
+                </div>
+            );
+        })}
+      
+    </div>
+  );
+
 }
 
 export default DictionaryAPI;

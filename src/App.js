@@ -1,10 +1,20 @@
-import React from "react";
+import React, {useState} from "react";
 import DictionaryAPI from "./dictionaryAPI";
+import PostWord from "./postWord";
 
 function App() {
+  const [typedWord, setTypedWord] = useState("");
+
   return (
-    <div className="App">
-      <DictionaryAPI/>
+    <div>
+      <PostWord
+        typedWord = {typedWord}
+        setTypedWord = {setTypedWord}
+      />
+      <DictionaryAPI
+        typedWord = {typedWord}
+        setTypedWord = {setTypedWord}
+      />
     </div>
   );
 }
