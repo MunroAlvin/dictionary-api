@@ -41,7 +41,11 @@ useEffect(() => {
       {error && (
         <div>{`There is a problem fetching the post data - ${error}`}</div>
       )}
-        {data && data.map((res) => {
+      { !error &&  (
+        console.log(data)
+      )}
+
+        {/* {data && data.map((res) => {
             return(
                 <div>
                     {res.objects.map((resOBJ) => {
@@ -62,7 +66,7 @@ useEffect(() => {
                     })}
                 </div>
             );
-        })}
+        })} */}
       
     </div>
   );
