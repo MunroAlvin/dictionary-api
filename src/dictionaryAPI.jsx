@@ -1,14 +1,10 @@
 import React, {useEffect, useState} from "react";
 
-// const API_URL = "https://thesaurusapi.fly.dev/hello";
-
 function DictionaryAPI(props){
 
 const [data, setData] = useState([]);
 const [loading, setLoading] = useState(true);
 const [error, setError] = useState(null);
-
-
 
 useEffect(() => {
     const getData = async () => {
@@ -38,34 +34,31 @@ useEffect(() => {
   console.log(data);
 
   return (
-    <div className="App">
+    <div>
       {loading && <div>A moment please...</div>}
-      {error && (
-        <div>{`There is a problem fetching the post data - ${error}`}</div>
-      )}
-        <div>
-        {!error && (data === null ? (<span>Spelling mistake</span>): 
-        
+      {error && (<div>{`There is a problem fetching the post data - ${error}`}</div>)}
+    <div>
+      {!error && (data === null ? (<span>Spelling mistake</span>):  
         (
           <div>
             <h3>Result:</h3>
             {data.map((object) => {
                 return(
                   <div>
-                    <h3>Key: {object.key}</h3>
-                    <h3>Pos: {object.pos}</h3>
-                    <h3>Word:{object.word}</h3>
-                    <h3>Synonyms: {object.synonyms.map((synonym) => {
-                                          return(
-                                              <ul>
-                                                  <li>{synonym}</li>
-                                              </ul>
-                                          );
-                                      })}</h3>
+                      <h3>Key: {object.key}</h3>
+                      <h3>Pos: {object.pos}</h3>
+                      <h3>Word:{object.word}</h3>
+                      <h3>Synonyms: {object.synonyms.map((synonym) => {
+                                            return(
+                                                <ul>
+                                                    <li>{synonym}</li>
+                                                </ul>
+                                            );
+                                        })}
+                      </h3>
                   </div>);})}
              </div>))}
         </div>
-         
     </div>
   );
 
