@@ -39,7 +39,7 @@ useEffect(() => {
       {loading && <div>A moment please...</div>}
       {/* {error && (<div>{`There is a problem fetching the post data - ${error}`}</div>)} */}
     <div>
-      {!error && (data === null ? (<h3>Spelling mistake -{">"} {props.typedWord}</h3>):  
+      {!error && !loading &&(data === null ? (<h3>Spelling mistake -{">"} {props.typedWord}</h3>):  
         (
           <div>
           <h3>Synonyms of {_.capitalize(props.typedWord)}:</h3>
@@ -54,7 +54,6 @@ useEffect(() => {
                                                 <ul>
                                                     <li>{synonym}</li>
                                                 </ul>);})}
-                      
                   </div>);})}
              </div>))}
         </div>
