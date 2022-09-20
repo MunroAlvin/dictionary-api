@@ -36,7 +36,7 @@ useEffect(() => {
   return (
     <div>
       {loading && <div>A moment please...</div>}
-      {error && (<div>{`There is a problem fetching the post data - ${error}`}</div>)}
+      {/* {error && (<div>{`There is a problem fetching the post data - ${error}`}</div>)} */}
     <div>
       {!error && (data === null ? (<span>Spelling mistake</span>):  
         (
@@ -48,13 +48,11 @@ useEffect(() => {
                       <h3>Key: {object.key}</h3>
                       <h3>Pos: {object.pos}</h3>
                       <h3>Word:{object.word}</h3>
-                      <h3>Synonyms: {object.synonyms.map((synonym) => {
+                      <h3>Synonyms:{object.synonyms.map((synonym) => {
                                             return(
                                                 <ul>
                                                     <li>{synonym}</li>
-                                                </ul>
-                                            );
-                                        })}
+                                                </ul>);})}
                       </h3>
                   </div>);})}
              </div>))}
