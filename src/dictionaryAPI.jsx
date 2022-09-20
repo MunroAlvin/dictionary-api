@@ -22,52 +22,50 @@ useEffect(() => {
           );
         }
         let actualData = await response.json();
-        setData( addInto => [actualData]);
+        setData(actualData.objects);
         setError(null);
       } catch(err) {
         setError(err.message);
         setData(null);
       } finally {
-        setLoading(false);
-      }  
+        setLoading(false); 
+      }
     }
     getData()
   }, [props.typedWord])
 
+
+  console.log(data);
+
   return (
     <div className="App">
-      <h3>Result:</h3>
       {loading && <div>A moment please...</div>}
       {error && (
         <div>{`There is a problem fetching the post data - ${error}`}</div>
       )}
-      { !error &&  (
-        console.log(data)
-      )}
-
-        {/* {data && data.map((res) => {
-            return(
-                <div>
-                    {res.objects.map((resOBJ) => {
-                        return(
-                            <div>
-                                <h3>Key: {resOBJ.key}</h3>
-                                <h3>Pos: {resOBJ.pos}</h3>
-                                <h3>Word: {resOBJ.word}</h3>
-                                <h3>Synonyms: {resOBJ.synonyms.map((synonym) => {
-                                    return(
-                                        <ul>
-                                            <li>{synonym}</li>
-                                        </ul>
-                                    );
-                                })}</h3>
-                            </div>
-                        );
-                    })}
-                </div>
-            );
-        })} */}
-      
+        <div>
+        {!error && (data === null ? (<span>Spelling mistake</span>): 
+        
+        (
+          <div>
+            <h3>Result:</h3>
+            {data.map((object) => {
+                return(
+                  <div>
+                    <h3>Key: {object.key}</h3>
+                    <h3>Pos: {object.pos}</h3>
+                    <h3>Word:{object.word}</h3>
+                    <h3>Synonyms: {object.synonyms.map((synonym) => {
+                                          return(
+                                              <ul>
+                                                  <li>{synonym}</li>
+                                              </ul>
+                                          );
+                                      })}</h3>
+                  </div>);})}
+             </div>))}
+        </div>
+         
     </div>
   );
 
