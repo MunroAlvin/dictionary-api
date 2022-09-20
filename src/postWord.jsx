@@ -1,12 +1,14 @@
 import React, {useState} from "react";
 
+
 function PostWord (props){
 
     const [typingWord, setTypingWord] = useState();
 
     function clickHandler(event){
         // console.log("clicked");
-        props.setTypedWord(typingWord);
+       
+        props.setTypedWord(typingWord.toLowerCase());
         setTypingWord("");
         event.preventDefault();
     }
